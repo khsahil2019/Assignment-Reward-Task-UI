@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class RewardCard extends StatelessWidget {
   final Item item;
 
-  const RewardCard({required this.item});
+  const RewardCard({Key? key, required this.item}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ class RewardCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                   gradient: LinearGradient(
                     colors: [Colors.purple[500]!, Colors.purple[700]!],
-                    stops: [0.3, 0.4],
+                    stops: const [0.3, 0.4],
                     begin: Alignment.bottomRight,
                     end: Alignment.topLeft,
                   ),

@@ -4,6 +4,8 @@ import 'package:assignment_post_api/services/api_service.dart';
 import 'package:assignment_post_api/widgets/item_card.dart';
 
 class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -11,6 +13,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<Item> items = [];
   bool isLoading = true;
+  String errorMessage = '';
 
   @override
   void initState() {
@@ -22,6 +25,7 @@ class _HomePageState extends State<HomePage> {
     try {
       setState(() {
         isLoading = true;
+        errorMessage = '';
       });
 
       List<Item> fetchedItems = await ApiService.fetchItems();
@@ -31,9 +35,10 @@ class _HomePageState extends State<HomePage> {
         isLoading = false;
       });
     } catch (error) {
-      print('Error fetching data: $error');
+      //  print('Error fetching data: $error');
       setState(() {
         isLoading = false;
+        errorMessage = 'Failed to fetch data. Please try again later.';
       });
     }
   }
@@ -51,13 +56,20 @@ class _HomePageState extends State<HomePage> {
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator()) // Show loader
-          : ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return RewardCard(item: items[index]);
-              },
-            ),
+          : errorMessage.isNotEmpty
+              ? Center(
+                  child: Text(
+                    errorMessage,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                )
+              : ListView.builder(
+                  padding: const EdgeInsets.all(8),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    return RewardCard(item: items[index]);
+                  },
+                ),
     );
   }
 }
