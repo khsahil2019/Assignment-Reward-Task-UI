@@ -3,7 +3,7 @@ import 'package:assignment_post_api/model/item.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String apiUrl = 'https://admin.meapps.xyz/api/v1/app/taskfetch';
+  static const String apiUrl = 'http://admin.meapps.xyz/api/v1/app/taskfetch';
 
   static Future<List<Item>> fetchItems() async {
     final response = await http.post(
